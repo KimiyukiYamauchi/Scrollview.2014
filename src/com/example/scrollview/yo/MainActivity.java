@@ -3,6 +3,7 @@ package com.example.scrollview.yo;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,13 +11,16 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Gallery;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity 
+	implements OnClickListener
+{
 
 	private ArrayList<Bitmap> list;
 
@@ -54,6 +58,8 @@ public class MainActivity extends Activity {
 			iv.setPadding(20, 0, 20, 0);
 			iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			iv.setImageBitmap(list.get(i));
+			iv.setId(i);
+			iv.setOnClickListener(this);
 			mygallery.addView(iv);
 		}
 		
@@ -80,5 +86,15 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		AlertDialog.Builder ad = new AlertDialog.Builder(this);
+		long id = v.getId();
+		ad.setMessage("id:" + id);
+		ad.setPositiveButton("OK", null);
+		ad.show();
 	}
 }
